@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 const FileCard = ({ file, onUpdate, onDelete }) => {
     const handleDownload = async () => {
         try {
-          const response = await axios.get(`https://notes-server-1-30mk.onrender.com/download/${file.filename}`, {
+          const response = await axios.get(`http://localhost:5002/download/${file.filename}`, {
             responseType: 'blob'  // Ensure response type is blob for file download
           });
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -27,12 +27,12 @@ const FileCard = ({ file, onUpdate, onDelete }) => {
         <Card style={{ width: '18rem' }}>
       
       <Card.Body>
-        <Card.Title class="uploadTitle">{file.title}</Card.Title>
-        <Card.Text class="desc">
+        <Card.Title className="uploadTitle">{file.title}</Card.Title>
+        <Card.Text className="desc">
         {file.description}
         </Card.Text>
         <Card.Text>
-        <a href={`http://localhost:5002/uploads/${file.filename}`} className="fileName"target="_blank" rel="noopener noreferrer">
+        <a href={`https://notes-server-1-30mk.onrender.com/uploads/${file.filename}`} className="fileName"target="_blank" rel="noopener noreferrer">
         {file.filename}
       </a>
         </Card.Text>

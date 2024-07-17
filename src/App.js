@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FileCard from './FileCard'; 
 import './App.css';
-import { Toast, Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import {  Button } from 'react-bootstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 
 function App() {
-  const [showToast, setShowToast] = useState(false);
-  const [toastType, setToastType] = useState('success'); // 'success' or 'error'
+  // const [showToast, setShowToast] = useState(false);
+  // const [toastType, setToastType] = useState('success'); // 'success' or 'error'
 
 
-  const toggleToast = () => setShowToast(!showToast);
+  // const toggleToast = () => setShowToast(!showToast);
   const [files, setFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   // const [title, setTitle] = useState('');
@@ -24,7 +24,7 @@ function App() {
 
   const fetchFiles = async () => {
     try {
-      const response = await axios.get('https://notes-server-1-30mk.onrender.com/files');
+      const response = await axios.get('http://localhost:5002/files');
       setFiles(response.data);
     } catch (error) {
       console.error('Error fetching files:', error);
@@ -43,7 +43,7 @@ function App() {
     // formData.append('description', description);
 
     try {
-      await axios.post('https://notes-server-1-30mk.onrender.com/upload', formData, {
+      await axios.post('http://localhost:5002/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -51,13 +51,13 @@ function App() {
       
       // setMessage('File uploaded successfully');
       fetchFiles();
-      setToastType('success');
-      toggleToast();
+      // setToastType('success');
+      // toggleToast();
     } catch (error) {
       setMessage('Error uploading file');
       console.error('Error uploading file:', error);
-      setToastType('error');
-      toggleToast();
+      // setToastType('error');
+      // toggleToast();
       
     }
   };
@@ -67,7 +67,7 @@ function App() {
     const updatedDescription = prompt("Enter new description:");
 
     try {
-      await axios.put(`https://notes-server-1-30mk.onrender.com/update/${id}`, {
+      await axios.put(`http://localhost:5002/update/${id}`, {
         title: updatedTitle,
         description: updatedDescription
       });
@@ -81,7 +81,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-       await axios.delete(`https://notes-server-1-30mk.onrender.com/delete/${id}`);
+       await axios.delete(`http://localhost:5002/delete/${id}`);
      
      setMessage(<h5 style={{color:'#dc3545'}}> File deleted successfully</h5>);
 
@@ -125,14 +125,14 @@ function App() {
           />
         ))}
       </div>
-      <Toast  show={showToast} onClose={toggleToast}  style={{  backgroundColor:'white', position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+      {/* <Toast  show={showToast} onClose={toggleToast}  style={{  backgroundColor:'white', position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }}>
       <Toast.Header closeButton>
           <strong className="me-auto">{toastType === 'success' ? 'Success' : '! Select File to upload'}</strong>
         </Toast.Header>
         <Toast.Body>
           {toastType === 'success' ?  'File Uploaded successfully!' : 'An error occurred while uploading file.'}
         </Toast.Body>
-      </Toast>
+      </Toast> */}
     </div>
   );
 }
