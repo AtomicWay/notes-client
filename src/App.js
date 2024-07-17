@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { storage } from './firebase'; // Import Firebase storage
 import axios from 'axios';
 import FileCard from './FileCard'; 
 import './App.css';
-import {  Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+
 // import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 
@@ -37,31 +39,47 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    // formData.append('title', title);
-    // formData.append('description', description);
-
-    try {
-      await axios.post('https://notes-server-steel.vercel.app/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      
-      // setMessage('File uploaded successfully');
-      fetchFiles();
-      // setToastType('success');
-      // toggleToast();
-    } catch (error) {
-      setMessage('Error uploading file');
-      console.error('Error uploading file:', error);
-      // setToastType('error');
-      // toggleToast();
-      
+    if (!selectedFile) {
+      setMessage('Please select a file');
+      return;
     }
+  
+    const uploadTask = storage.ref(`files/${selectedFile.name}`).put(selectedFile);
+  
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        // Optionally track upload progress here
+      },
+      (error) => {
+        setMessage('Error uploading file');
+        console.error('Error uploading file:', error);
+      },
+      async () => {
+        // Get the download URL
+        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+  
+        // Create a new file object to save to your database
+        const newFile = {
+          filename: selectedFile.name,
+          url: downloadURL,
+        };
+  
+        // Save to your backend database (e.g., MongoDB)
+        try {
+          await axios.post('https://your-backend-url/upload', newFile);
+          setMessage('File uploaded successfully');
+          fetchFiles(); // Refresh the file list
+        } catch (error) {
+          setMessage('Error saving file to database');
+          console.error('Error saving file to database:', error);
+        }
+      }
+    );
   };
+  
 
+  
   const handleUpdate = async (id) => {
     const updatedTitle = prompt("Enter new title:");
     const updatedDescription = prompt("Enter new description:");
