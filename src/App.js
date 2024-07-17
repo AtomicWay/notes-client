@@ -50,7 +50,7 @@ function App() {
         }
       });
       
-      // setMessage('File uploaded successfully');
+      setMessage('File uploaded successfully');
       fetchFiles();
       setToastType('success');
       toggleToast();
