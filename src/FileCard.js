@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 const FileCard = ({ file, onUpdate, onDelete }) => {
     const handleDownload = async () => {
         try {
-          const response = await axios.get(`https://notes-server-jade.vercel.app/download/${file.filename}`, {
+          const response = await axios.get(`https://notes-server-steel.vercel.app/download/${file.filename}`, {
             responseType: 'blob'  // Ensure response type is blob for file download
           });
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -32,7 +32,7 @@ const FileCard = ({ file, onUpdate, onDelete }) => {
         {file.description}
         </Card.Text>
         <Card.Text>
-        <a href={`https://notes-server-1-30mk.onrender.com/uploads/${file.filename}`} className="fileName"target="_blank" rel="noopener noreferrer">
+        <a href={`https://notes-server-steel.vercel.app/uploads/${file.filename}`} className="fileName"target="_blank" rel="noopener noreferrer">
         {file.filename}
       </a>
         </Card.Text>
