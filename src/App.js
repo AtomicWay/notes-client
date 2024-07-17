@@ -24,7 +24,7 @@ function App() {
 
   const fetchFiles = async () => {
     try {
-      const response = await axios.get('https://notes-server-jade.vercel.app/files');
+      const response = await axios.get('https://notes-server-1-30mk.onrender.com/files');
       setFiles(response.data);
     } catch (error) {
       console.error('Error fetching files:', error);
@@ -43,7 +43,7 @@ function App() {
     // formData.append('description', description);
 
     try {
-      await axios.post('https://notes-server-jade.vercel.app/upload', formData, {
+      await axios.post('https://notes-server-1-30mk.onrender.com/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -67,7 +67,7 @@ function App() {
     const updatedDescription = prompt("Enter new description:");
 
     try {
-      await axios.put(`https://notes-server-jade.vercel.app/update/${id}`, {
+      await axios.put(`https://notes-server-1-30mk.onrender.com/update/${id}`, {
         title: updatedTitle,
         description: updatedDescription
       });
@@ -81,7 +81,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-       await axios.delete(`https://notes-server-jade.vercel.app/delete/${id}`);
+       await axios.delete(`https://notes-server-1-30mk.onrender.com/delete/${id}`);
      
      setMessage(<h5 style={{color:'#dc3545'}}> File deleted successfully</h5>);
 

@@ -32,7 +32,7 @@ const FileCard = ({ file, onUpdate, onDelete }) => {
         {file.description}
         </Card.Text>
         <Card.Text>
-        <a href={`https://notes-server-jade.vercel.app/uploads/${file.filename}`} className="fileName"target="_blank" rel="noopener noreferrer">
+        <a href={`https://notes-server-1-30mk.onrender.com/uploads/${file.filename}`} className="fileName"target="_blank" rel="noopener noreferrer">
         {file.filename}
       </a>
         </Card.Text>
