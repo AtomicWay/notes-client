@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FileCard from './FileCard'; 
 import './App.css';
-import {  Button } from 'react-bootstrap';
-// import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import { Toast, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 
 function App() {
-  // const [showToast, setShowToast] = useState(false);
-  // const [toastType, setToastType] = useState('success'); // 'success' or 'error'
+  const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState('success'); // 'success' or 'error'
 
 
-  // const toggleToast = () => setShowToast(!showToast);
+  const toggleToast = () => setShowToast(!showToast);
   const [files, setFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   // const [title, setTitle] = useState('');
@@ -52,13 +52,13 @@ function App() {
       
       // setMessage('File uploaded successfully');
       fetchFiles();
-      // setToastType('success');
-      // toggleToast();
+      setToastType('success');
+      toggleToast();
     } catch (error) {
       setMessage('Error uploading file');
       console.error('Error uploading file:', error);
-      // setToastType('error');
-      // toggleToast();
+      setToastType('error');
+      toggleToast();
       
     }
   };
@@ -126,14 +126,14 @@ function App() {
           />
         ))}
       </div>
-      {/* <Toast  show={showToast} onClose={toggleToast}  style={{  backgroundColor:'white', position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+      <Toast  show={showToast} onClose={toggleToast}  style={{  backgroundColor:'white', position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }}>
       <Toast.Header closeButton>
           <strong className="me-auto">{toastType === 'success' ? 'Success' : '! Select File to upload'}</strong>
         </Toast.Header>
         <Toast.Body>
           {toastType === 'success' ?  'File Uploaded successfully!' : 'An error occurred while uploading file.'}
         </Toast.Body>
-      </Toast> */}
+      </Toast>
     </div>
   );
 }
